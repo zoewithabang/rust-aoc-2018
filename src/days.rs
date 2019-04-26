@@ -3,8 +3,8 @@ pub mod day2;
 
 pub trait Day {
     fn run(&self) {
-        &self.part1();
-        &self.part2();
+        self.part1();
+        self.part2();
     }
 
     fn part1(&self) -> String;

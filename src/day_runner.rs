@@ -14,8 +14,8 @@ impl DayRunner {
         DayRunner { days }
     }
 
-    pub fn run_day(&self, day: &u32) {
-        match &self.days.get(day) {
+    pub fn run_day(&self, day: u32) {
+        match self.days.get(&day) {
             Some(day_instance) => {
                 println!();
                 println!("========== DAY {} ==========", day);

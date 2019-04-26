@@ -30,6 +30,6 @@ fn main() {
             continue;
         }
 
-        day_runner.run_day(&day);
+        day_runner.run_day(day);
     }
 }
