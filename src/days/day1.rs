@@ -1,45 +1,47 @@
-use std::fs;
-use crate::util::printer;
 use std::collections::HashMap;
+use std::fs;
+use crate::days::Day;
 
-pub fn run() {
-    let input = fs::read_to_string("res/day1.txt").unwrap();
-
-    part1(&input);
-    part2(&input);
+pub struct Day1 {
+    input: String
 }
 
-fn part1(input: &str) {
-    printer::print_part(1);
+impl Day1 {
+    pub fn new() -> Day1 {
+        let input = fs::read_to_string("res/day1.txt").unwrap();
 
-    let result = input.lines()
-        .map(|value| value.parse::<i32>().unwrap())
-        .sum::<i32>();
-
-    println!("Resulting frequency: {}", result);
+        Day1 { input }
+    }
 }
 
-fn part2(input: &str) {
-    printer::print_part(2);
+impl Day for Day1 {
+    fn part1(&self) -> String {
+        let result = &self.input.lines()
+            .map(|value| value.parse::<i32>().unwrap())
+            .sum::<i32>();
 
-    let values = input.lines()
-        .map(|value| value.parse::<i32>().unwrap())
-        .collect::<Vec<i32>>();
+        return format!("Resulting frequency: {}", &result);
+    }
 
-    let mut unique_values = HashMap::new();
-    let mut frequency = 0;
+    fn part2(&self) -> String {
+        let values = &self.input.lines()
+            .map(|value| value.parse::<i32>().unwrap())
+            .collect::<Vec<i32>>();
 
-    loop {
-        for value in &values {
-            frequency += value;
-            let counter = unique_values.entry(frequency).or_insert(0);
+        let mut unique_values = HashMap::new();
+        let mut frequency = 0;
 
-            if *counter > 0 {
-                println!("First repeated frequency: {}", frequency);
-                return;
-            }
+        loop {
+            for value in values {
+                frequency += value;
+                let counter = unique_values.entry(frequency).or_insert(0);
 
-            *counter += 1;
-        };
+                if *counter > 0 {
+                    return format!("First repeated frequency: {}", &frequency);
+                }
+
+                *counter += 1;
+            };
+        }
     }
 }

@@ -1,14 +1,8 @@
-
 use std::io;
-
-mod days;
-
-mod util {
-    pub mod printer;
-}
+use aoc_2018::day_runner::DayRunner;
 
 fn main() {
-    let days_map = days::init_days();
+    let day_runner = DayRunner::new();
 
     loop {
         println!();
@@ -36,7 +30,6 @@ fn main() {
             continue;
         }
 
-        days::run_day(&days_map, &day);
+        day_runner.run_day(&day);
     }
 }
-
