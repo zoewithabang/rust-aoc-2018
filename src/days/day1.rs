@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::HashSet;
 use std::fs;
 use crate::days::Day;
 
@@ -28,19 +28,15 @@ impl Day for Day1 {
             .map(|value| value.parse::<i32>().unwrap())
             .collect::<Vec<i32>>();
 
-        let mut unique_values = HashMap::new();
+        let mut unique_values = HashSet::new();
         let mut frequency = 0;
 
         loop {
             for value in values {
                 frequency += value;
-                let counter = unique_values.entry(frequency).or_insert(0);
-
-                if *counter > 0 {
-                    return format!("First repeated frequency: {}", &frequency);
+                if !unique_values.insert(frequency) {
+                    return format!("First repeated frequency: {}", frequency);
                 }
-
-                *counter += 1;
             };
         }
     }

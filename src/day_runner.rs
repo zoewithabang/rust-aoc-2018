@@ -1,5 +1,5 @@
 use std::collections::HashMap;
-use crate::days::{Day, day1::Day1, day2::Day2};
+use crate::days::{Day, day1::Day1, day2::Day2, day3::Day3};
 
 pub struct DayRunner {
     days: HashMap<u32, Box<Day>>
@@ -10,6 +10,7 @@ impl DayRunner {
         let mut days = HashMap::<u32, Box<Day>>::with_capacity(25);
         days.insert(1, Box::new(Day1::new()));
         days.insert(2, Box::new(Day2::new()));
+        days.insert(3, Box::new(Day3::new()));
 
         DayRunner { days }
     }
