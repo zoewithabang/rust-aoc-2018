@@ -1,6 +1,6 @@
+use regex::Regex;
 use std::fs;
 use crate::days::Day;
-use regex::Regex;
 
 pub struct Day3 {
     input: String,
