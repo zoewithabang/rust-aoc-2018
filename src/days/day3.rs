@@ -1,6 +1,6 @@
+use crate::days::Day;
 use regex::Regex;
 use std::fs;
-use crate::days::Day;
 
 pub struct Day3 {
     input: String,
@@ -21,7 +21,8 @@ impl Day for Day3 {
         let mut fabric_squares = vec![vec![0; 1000]; 1000];
 
         for line in lines {
-            let vars = splitter.split(line)
+            let vars = splitter
+                .split(line)
                 .skip(1)
                 .map(|x| x.parse::<usize>().unwrap())
                 .collect::<Vec<usize>>();
@@ -35,7 +36,8 @@ impl Day for Day3 {
             }
         }
 
-        let result = fabric_squares.iter()
+        let result = fabric_squares
+            .iter()
             .flatten()
             .filter(|square| **square > 1)
             .count();
@@ -50,12 +52,14 @@ impl Day for Day3 {
         let mut line_vars = Vec::<(usize, usize, usize, usize, usize)>::new();
 
         for line in lines {
-            let vars = splitter.split(line)
+            let vars = splitter
+                .split(line)
                 .skip(1)
                 .map(|x| x.parse::<usize>().unwrap())
                 .collect::<Vec<usize>>();
 
-            let (id, x_coord, y_coord, x_size, y_size) = (vars[0], vars[1], vars[2], vars[3], vars[4]);
+            let (id, x_coord, y_coord, x_size, y_size) =
+                (vars[0], vars[1], vars[2], vars[3], vars[4]);
             line_vars.push((id, x_coord, y_coord, x_size, y_size));
 
             for y in y_coord..(y_coord + y_size) {
@@ -66,7 +70,8 @@ impl Day for Day3 {
         }
 
         'lineloop: for line_var in line_vars {
-            let (id, x_coord, y_coord, x_size, y_size) = (line_var.0, line_var.1, line_var.2, line_var.3, line_var.4);
+            let (id, x_coord, y_coord, x_size, y_size) =
+                (line_var.0, line_var.1, line_var.2, line_var.3, line_var.4);
 
             for y in y_coord..(y_coord + y_size) {
                 for x in x_coord..(x_coord + x_size) {

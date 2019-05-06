@@ -1,5 +1,5 @@
-use std::io;
 use aoc_2018::day_runner::DayRunner;
+use std::io;
 
 fn main() {
     let day_runner = DayRunner::new();
@@ -9,7 +9,8 @@ fn main() {
         println!("Which day should I run? (1-25 or q to quit)");
 
         let mut input = String::new();
-        io::stdin().read_line(&mut input)
+        io::stdin()
+            .read_line(&mut input)
             .expect("Failed to read input");
 
         if input.trim() == "q" {

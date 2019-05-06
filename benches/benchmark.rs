@@ -1,11 +1,5 @@
+use aoc_2018::days::{day1::Day1, day2::Day2, day3::Day3, day4::Day4, Day};
 use criterion::*;
-use aoc_2018::days::{
-    Day,
-    day1::Day1,
-    day2::Day2,
-    day3::Day3,
-    day4::Day4
-};
 
 fn criterion_benchmark(c: &mut Criterion) {
     let day1_1 = Day1::new();

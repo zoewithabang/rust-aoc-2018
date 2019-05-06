@@ -1,9 +1,9 @@
+use crate::days::Day;
 use std::collections::HashSet;
 use std::fs;
-use crate::days::Day;
 
 pub struct Day1 {
-    input: String
+    input: String,
 }
 
 impl Day1 {
@@ -16,7 +16,9 @@ impl Day1 {
 
 impl Day for Day1 {
     fn part1(&self) -> String {
-        let result = &self.input.lines()
+        let result = &self
+            .input
+            .lines()
             .map(|value| value.parse::<i32>().unwrap())
             .sum::<i32>();
 
@@ -24,7 +26,9 @@ impl Day for Day1 {
     }
 
     fn part2(&self) -> String {
-        let values = &self.input.lines()
+        let values = &self
+            .input
+            .lines()
             .map(|value| value.parse::<i32>().unwrap())
             .collect::<Vec<i32>>();
 
@@ -37,7 +41,7 @@ impl Day for Day1 {
                 if !unique_values.insert(frequency) {
                     return format!("First repeated frequency: {}", frequency);
                 }
-            };
+            }
         }
     }
 }

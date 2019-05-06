@@ -1,9 +1,9 @@
+use crate::days::Day;
 use std::collections::HashMap;
 use std::fs;
-use crate::days::Day;
 
 pub struct Day2 {
-    input: String
+    input: String,
 }
 
 impl Day2 {
@@ -23,11 +23,10 @@ impl Day for Day2 {
         for line in lines {
             let mut map = HashMap::new();
 
-            line.chars()
-                .for_each(|x| {
-                    let count = map.entry(x).or_insert(0);
-                    *count += 1;
-                });
+            line.chars().for_each(|x| {
+                let count = map.entry(x).or_insert(0);
+                *count += 1;
+            });
 
             if map.values().any(|x| *x == 2) {
                 two_count += 1;
@@ -50,13 +49,17 @@ impl Day for Day2 {
 
         for i in 0..line_count {
             for j in (i + 1)..line_count {
-                let (common, _) = lines[i].chars()
+                let (common, _) = lines[i]
+                    .chars()
                     .zip(lines[j].chars())
                     .filter(|&(a, b)| a == b)
                     .unzip::<char, char, Vec<_>, Vec<_>>();
 
                 if common.len() == line_size - 1 {
-                    return format!("Correct boxes common letters: {}", &common.iter().collect::<String>());
+                    return format!(
+                        "Correct boxes common letters: {}",
+                        &common.iter().collect::<String>()
+                    );
                 }
             }
         }

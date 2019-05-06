@@ -1,10 +1,10 @@
+use crate::days::Day;
 use chrono::prelude::*;
 use regex::Regex;
-use std::collections::HashMap;
 use std::cmp::Ordering;
+use std::collections::HashMap;
 use std::fs;
 use std::str::Lines;
-use crate::days::Day;
 
 type GuardId = u32;
 
@@ -26,12 +26,14 @@ impl Day for Day4 {
         let records = get_sorted_records_vec(&lines);
         let guard_sleeping_minutes = get_guard_sleeping_minutes(records);
 
-        let (sleepiest_guard_id, minutes_slept) = guard_sleeping_minutes.iter()
+        let (sleepiest_guard_id, minutes_slept) = guard_sleeping_minutes
+            .iter()
             .map(|(guard_id, minute_maps)| (*guard_id, minute_maps.values().sum::<u32>()))
             .max_by(|(_, minutes_slept), (_, minutes_slept2)| minutes_slept.cmp(minutes_slept2))
             .unwrap();
 
-        let (sleepiest_minute, sleep_count) = guard_sleeping_minutes.get(&sleepiest_guard_id)
+        let (sleepiest_minute, sleep_count) = guard_sleeping_minutes
+            .get(&sleepiest_guard_id)
             .unwrap()
             .iter()
             .max_by(|(_, sleep_count), (_, sleep_count2)| sleep_count.cmp(sleep_count2))
@@ -50,10 +52,17 @@ impl Day for Day4 {
         let records = get_sorted_records_vec(&lines);
         let guard_sleeping_minutes = get_guard_sleeping_minutes(records);
 
-        let (sleepiest_guard_id, (sleepiest_minute, sleep_count)) = guard_sleeping_minutes.iter()
-            .map(|(guard_id, minute_maps)| (*guard_id, minute_maps.iter()
-                .max_by(|(_, sleep_count), (_, sleep_count2)| sleep_count.cmp(sleep_count2))
-                .unwrap()))
+        let (sleepiest_guard_id, (sleepiest_minute, sleep_count)) = guard_sleeping_minutes
+            .iter()
+            .map(|(guard_id, minute_maps)| {
+                (
+                    *guard_id,
+                    minute_maps
+                        .iter()
+                        .max_by(|(_, sleep_count), (_, sleep_count2)| sleep_count.cmp(sleep_count2))
+                        .unwrap(),
+                )
+            })
             .max_by(|(_, (_, sleep_count)), (_, (_, sleep_count2))| sleep_count.cmp(sleep_count2))
             .unwrap();
 
@@ -69,14 +78,14 @@ impl Day for Day4 {
 enum State {
     Start,
     Sleep,
-    Wake
+    Wake,
 }
 
 #[derive(Debug, Eq, PartialEq)]
 struct Record {
     timestamp: DateTime<Utc>,
     guard_id: Option<GuardId>,
-    state: State
+    state: State,
 }
 
 impl Ord for Record {
@@ -99,27 +108,29 @@ fn get_sorted_records_vec(lines: &Lines) -> Vec<Record> {
         let line_halves = line.split("] ").collect::<Vec<&str>>();
         let (timestamp, state) = (line_halves[0], line_halves[1]);
         let timestamp = Utc.datetime_from_str(timestamp, "[%Y-%m-%d %H:%M").unwrap();
-        
+
         let record = match &state[..5] {
             "falls" => Record {
                 timestamp,
                 guard_id: None,
-                state: State::Sleep
+                state: State::Sleep,
             },
             "wakes" => Record {
                 timestamp,
                 guard_id: None,
-                state: State::Wake
+                state: State::Wake,
             },
             "Guard" => {
-                let guard_id = id_finder.captures(state).unwrap()[0].parse::<u32>().unwrap();
+                let guard_id = id_finder.captures(state).unwrap()[0]
+                    .parse::<u32>()
+                    .unwrap();
                 Record {
                     timestamp,
                     guard_id: Some(guard_id),
-                    state: State::Start
+                    state: State::Start,
                 }
             }
-            _ => panic!("Invalid state: {}", state)
+            _ => panic!("Invalid state: {}", state),
         };
 
         records.push(record);
@@ -139,13 +150,14 @@ fn get_guard_sleeping_minutes(records: Vec<Record>) -> HashMap<GuardId, HashMap<
         match record.state {
             State::Start => {
                 current_guard = record.guard_id;
-            },
+            }
             State::Sleep => {
                 slept_at_min = record.timestamp.minute();
             }
             State::Wake => {
-                let sleeping_minutes = guard_sleeping_minutes.entry(current_guard.unwrap())
-                        .or_insert(HashMap::new());
+                let sleeping_minutes = guard_sleeping_minutes
+                    .entry(current_guard.unwrap())
+                    .or_insert(HashMap::new());
 
                 for minute in slept_at_min..record.timestamp.minute() {
                     let minute_entry = sleeping_minutes.entry(minute).or_insert(0);
