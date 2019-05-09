@@ -1,4 +1,4 @@
-use crate::days::{day1::Day1, day2::Day2, day3::Day3, day4::Day4, day5::Day5, Day};
+use crate::days::{day1::Day1, day2::Day2, day3::Day3, day4::Day4, day5::Day5, day6::Day6, Day};
 use std::collections::HashMap;
 
 pub struct DayRunner {
@@ -13,6 +13,7 @@ impl DayRunner {
         days.insert(3, Box::new(Day3::new()));
         days.insert(4, Box::new(Day4::new()));
         days.insert(5, Box::new(Day5::new()));
+        days.insert(6, Box::new(Day6::new()));
 
         DayRunner { days }
     }
