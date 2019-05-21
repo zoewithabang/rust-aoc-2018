@@ -32,9 +32,7 @@ impl Day for Day4 {
             .max_by(|(_, minutes_slept), (_, minutes_slept2)| minutes_slept.cmp(minutes_slept2))
             .unwrap();
 
-        let (sleepiest_minute, sleep_count) = guard_sleeping_minutes
-            .get(&sleepiest_guard_id)
-            .unwrap()
+        let (sleepiest_minute, sleep_count) = guard_sleeping_minutes[&sleepiest_guard_id]
             .iter()
             .max_by(|(_, sleep_count), (_, sleep_count2)| sleep_count.cmp(sleep_count2))
             .unwrap();
@@ -157,7 +155,7 @@ fn get_guard_sleeping_minutes(records: Vec<Record>) -> HashMap<GuardId, HashMap<
             State::Wake => {
                 let sleeping_minutes = guard_sleeping_minutes
                     .entry(current_guard.unwrap())
-                    .or_insert(HashMap::new());
+                    .or_insert_with(HashMap::new);
 
                 for minute in slept_at_min..record.timestamp.minute() {
                     let minute_entry = sleeping_minutes.entry(minute).or_insert(0);

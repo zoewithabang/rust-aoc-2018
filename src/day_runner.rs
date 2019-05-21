@@ -1,4 +1,6 @@
-use crate::days::{day1::Day1, day2::Day2, day3::Day3, day4::Day4, day5::Day5, day6::Day6, Day};
+use crate::days::{
+    day1::Day1, day2::Day2, day3::Day3, day4::Day4, day5::Day5, day6::Day6, day7::Day7, Day,
+};
 use std::collections::HashMap;
 
 pub struct DayRunner {
@@ -14,21 +16,24 @@ impl DayRunner {
         days.insert(4, Box::new(Day4::new()));
         days.insert(5, Box::new(Day5::new()));
         days.insert(6, Box::new(Day6::new()));
+        days.insert(7, Box::new(Day7::new()));
 
         DayRunner { days }
     }
 
     pub fn run_day(&self, day: u32) {
         match self.days.get(&day) {
-            Some(day_instance) => {
-                println!();
-                println!("========== DAY {} ==========", day);
-                println!("===== Part 1 =====");
-                println!("{}", day_instance.part1());
-                println!("===== Part 2 =====");
-                println!("{}", day_instance.part2());
-            }
+            Some(day_instance) => run_day_internal(day, &day_instance),
             None => println!("I haven't got to that day yet!"),
         };
     }
+}
+
+fn run_day_internal(day_number: u32, day: &Box<dyn Day>) {
+    println!();
+    println!("========== DAY {} ==========", day_number);
+    println!("===== Part 1 =====");
+    println!("{}", day.part1());
+    println!("===== Part 2 =====");
+    println!("{}", day.part2());
 }
