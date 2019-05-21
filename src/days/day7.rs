@@ -183,3 +183,18 @@ fn get_busy_until(initial_time: u32, step: Step) -> u32 {
     // 60 addition specified in the day challenge
     initial_time + (step as u32) - b'A' as u32 + 1 + 60
 }
+
+#[cfg(test)]
+mod day7_tests {
+    use super::*;
+
+    #[test]
+    fn part1_puzzle() {
+        assert!(Day7::new().part1().ends_with("HEGMPOAWBFCDITVXYZRKUQNSLJ"));
+    }
+
+    #[test]
+    fn part2_puzzle() {
+        assert!(Day7::new().part2().ends_with("1226"));
+    }
+}

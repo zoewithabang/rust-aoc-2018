@@ -45,3 +45,18 @@ impl Day for Day1 {
         }
     }
 }
+
+#[cfg(test)]
+mod day1_tests {
+    use super::*;
+
+    #[test]
+    fn part1_puzzle() {
+        assert!(Day1::new().part1().ends_with("423"));
+    }
+
+    #[test]
+    fn part2_puzzle() {
+        assert!(Day1::new().part2().ends_with("61126"));
+    }
+}

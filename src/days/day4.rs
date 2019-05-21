@@ -167,3 +167,18 @@ fn get_guard_sleeping_minutes(records: Vec<Record>) -> HashMap<GuardId, HashMap<
 
     guard_sleeping_minutes
 }
+
+#[cfg(test)]
+mod day4_tests {
+    use super::*;
+
+    #[test]
+    fn part1_puzzle() {
+        assert!(Day4::new().part1().ends_with("12169"));
+    }
+
+    #[test]
+    fn part2_puzzle() {
+        assert!(Day4::new().part2().ends_with("16164"));
+    }
+}

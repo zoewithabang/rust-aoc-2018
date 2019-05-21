@@ -87,3 +87,18 @@ impl Day for Day3 {
         panic!("No non-overlapping claim found!")
     }
 }
+
+#[cfg(test)]
+mod day3_tests {
+    use super::*;
+
+    #[test]
+    fn part1_puzzle() {
+        assert!(Day3::new().part1().ends_with("124850"));
+    }
+
+    #[test]
+    fn part2_puzzle() {
+        assert!(Day3::new().part2().ends_with("1097"));
+    }
+}

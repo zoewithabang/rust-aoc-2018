@@ -202,3 +202,18 @@ fn part1_iter(
             }
         })
 }
+
+#[cfg(test)]
+mod day6_tests {
+    use super::*;
+
+    #[test]
+    fn part1_puzzle() {
+        assert!(Day6::new().part1().ends_with("3890"));
+    }
+
+    #[test]
+    fn part2_puzzle() {
+        assert!(Day6::new().part2().ends_with("40284"));
+    }
+}

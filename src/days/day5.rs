@@ -60,3 +60,18 @@ fn react_polymer(polymer: &str) -> usize {
 
     end_polymer.len()
 }
+
+#[cfg(test)]
+mod day5_tests {
+    use super::*;
+
+    #[test]
+    fn part1_puzzle() {
+        assert!(Day5::new().part1().ends_with("10766"));
+    }
+
+    #[test]
+    fn part2_puzzle() {
+        assert!(Day5::new().part2().ends_with("6538"));
+    }
+}

@@ -67,3 +67,18 @@ impl Day for Day2 {
         panic!("Correct boxes were not found!");
     }
 }
+
+#[cfg(test)]
+mod day2_tests {
+    use super::*;
+
+    #[test]
+    fn part1_puzzle() {
+        assert!(Day2::new().part1().ends_with("7776"));
+    }
+
+    #[test]
+    fn part2_puzzle() {
+        assert!(Day2::new().part2().ends_with("wlkigsqyfecjqqmnxaktdrhbz"));
+    }
+}
