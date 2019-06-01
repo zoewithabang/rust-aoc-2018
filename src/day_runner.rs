@@ -1,5 +1,6 @@
 use crate::days::{
-    day1::Day1, day2::Day2, day3::Day3, day4::Day4, day5::Day5, day6::Day6, day7::Day7, Day,
+    day1::Day1, day2::Day2, day3::Day3, day4::Day4, day5::Day5, day6::Day6, day7::Day7, day8::Day8,
+    day9::Day9, Day,
 };
 use std::collections::HashMap;
 
@@ -17,6 +18,8 @@ impl DayRunner {
         days.insert(5, Box::new(Day5::new()));
         days.insert(6, Box::new(Day6::new()));
         days.insert(7, Box::new(Day7::new()));
+        days.insert(8, Box::new(Day8::new()));
+        days.insert(9, Box::new(Day9::new()));
 
         DayRunner { days }
     }
