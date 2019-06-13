@@ -2,7 +2,6 @@ use crate::days::Day;
 use regex::Regex;
 use std::cell::RefCell;
 use std::error::Error;
-use std::fs;
 use std::rc::Rc;
 
 pub struct Day9 {
@@ -11,7 +10,7 @@ pub struct Day9 {
 
 impl Day9 {
     pub fn new() -> Day9 {
-        let input = fs::read_to_string("res/day9.txt").unwrap();
+        let input = "426 players; last marble is worth 72058 points".to_string();
 
         Day9 { input }
     }

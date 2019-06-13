@@ -1,16 +1,16 @@
 use crate::days::{
-    day1::Day1, day2::Day2, day3::Day3, day4::Day4, day5::Day5, day6::Day6, day7::Day7, day8::Day8,
-    day9::Day9, Day,
+    day1::Day1, day10::Day10, day11::Day11, day12::Day12, day2::Day2, day3::Day3, day4::Day4,
+    day5::Day5, day6::Day6, day7::Day7, day8::Day8, day9::Day9, Day,
 };
 use std::collections::HashMap;
 
 pub struct DayRunner {
-    days: HashMap<u32, Box<Day>>,
+    days: HashMap<u32, Box<dyn Day>>,
 }
 
 impl DayRunner {
     pub fn new() -> DayRunner {
-        let mut days = HashMap::<u32, Box<Day>>::with_capacity(25);
+        let mut days = HashMap::<u32, Box<dyn Day>>::with_capacity(25);
         days.insert(1, Box::new(Day1::new()));
         days.insert(2, Box::new(Day2::new()));
         days.insert(3, Box::new(Day3::new()));
@@ -20,6 +20,9 @@ impl DayRunner {
         days.insert(7, Box::new(Day7::new()));
         days.insert(8, Box::new(Day8::new()));
         days.insert(9, Box::new(Day9::new()));
+        days.insert(10, Box::new(Day10::new()));
+        days.insert(11, Box::new(Day11::new()));
+        days.insert(12, Box::new(Day12::new()));
 
         DayRunner { days }
     }

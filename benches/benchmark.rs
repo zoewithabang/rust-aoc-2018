@@ -1,6 +1,6 @@
 use aoc_2018::days::{
-    day1::Day1, day2::Day2, day3::Day3, day4::Day4, day5::Day5, day6::Day6, day7::Day7, day8::Day8,
-    day9::Day9, Day,
+    day1::Day1, day10::Day10, day11::Day11, day12::Day12, day2::Day2, day3::Day3, day4::Day4, day5::Day5,
+    day6::Day6, day7::Day7, day8::Day8, day9::Day9, Day,
 };
 use criterion::*;
 use std::time::Duration;
@@ -24,6 +24,12 @@ fn criterion_benchmark(c: &mut Criterion) {
     let day8_2 = Day8::new();
     let day9_1 = Day9::new();
     let day9_2 = Day9::new();
+    let day10_1 = Day10::new();
+    let day10_2 = Day10::new();
+    let day11_1 = Day11::new();
+    let day11_2 = Day11::new();
+    let day12_1 = Day12::new();
+    let day12_2 = Day12::new();
 
     c.bench_function("day1/part1", move |b| b.iter(|| day1_1.part1()));
     c.bench_function("day1/part2", move |b| b.iter(|| day1_2.part2()));
@@ -53,6 +59,13 @@ fn criterion_benchmark(c: &mut Criterion) {
             .sample_size(10)
             .measurement_time(Duration::from_secs(60)),
     );
+    c.bench_function("day10/part1", move |b| b.iter(|| day10_1.part1()));
+    c.bench_function("day10/part2", move |b| b.iter(|| day10_2.part2()));
+    c.bench_function("day11/part1", move |b| b.iter(|| day11_1.part1()));
+    c.bench_function("day11/part2", move |b| b.iter(|| day11_2.part2()));
+    c.bench_function("day12/part1", move |b| b.iter(|| day12_1.part1()));
+    c.bench_function("day12/part2", move |b| b.iter(|| day12_2.part2()));
+
 }
 
 criterion_group!(benches, criterion_benchmark);
