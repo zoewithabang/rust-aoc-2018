@@ -24,13 +24,50 @@ impl Day for Day12 {
             generation = generation.next().unwrap();
         });
 
-        let result = generation.pots.iter().filter(|(_, pot)| **pot == Pot::Plant).map(|(i, _)| i).sum::<i32>();
+        let result = generation
+            .pots
+            .iter()
+            .filter(|(_, pot)| **pot == Pot::Plant)
+            .map(|(i, _)| i)
+            .sum::<i32>();
 
         format!("Sum of pots which contain a plant: {}", result)
     }
 
     fn part2(&self) -> String {
-        format!("{}", 0)
+        let mut generation = parse_input(&self.input).unwrap();
+        let mut generation_count = 0;
+        let mut latest_plant_count = 0;
+        let mut latest_diff = 0;
+
+        loop {
+            generation_count += 1;
+            generation = generation.next().unwrap();
+
+            let plant_count = generation
+                .pots
+                .iter()
+                .filter(|(_, pot)| **pot == Pot::Plant)
+                .map(|(i, _)| i)
+                .sum::<i32>();
+
+            let difference = plant_count - latest_plant_count;
+            latest_plant_count = plant_count;
+
+            if difference == latest_diff {
+                break;
+            } else {
+                latest_diff = difference;
+            }
+        }
+
+        let remaining_gen_count = 50_000_000_000 - generation_count as i64;
+        let result = latest_plant_count as i64 + (remaining_gen_count * latest_diff as i64);
+
+        format!(
+            "After 50 billion, sum of pots which contain a plant: {}",
+            result
+        )
     }
 }
 
@@ -42,7 +79,11 @@ struct Generation {
 }
 
 impl Generation {
-    fn new(number: i32, pots: BTreeMap<i32, Pot>, transitions: Vec<Transition>) -> Result<Self, Box<dyn Error>> {
+    fn new(
+        number: i32,
+        pots: BTreeMap<i32, Pot>,
+        transitions: Vec<Transition>,
+    ) -> Result<Self, Box<dyn Error>> {
         let mut generation = Generation {
             number,
             pots,
@@ -76,7 +117,12 @@ impl Generation {
             let mut next_result = Pot::Empty;
 
             self.transitions.iter().for_each(|transition| {
-                if transition.state.iter().zip(&pot_group).all(|(a, b)| b.is_some() && a == b.unwrap()) {
+                if transition
+                    .state
+                    .iter()
+                    .zip(&pot_group)
+                    .all(|(a, b)| b.is_some() && a == b.unwrap())
+                {
                     next_result = transition.result.clone();
 
                     return;
@@ -88,7 +134,11 @@ impl Generation {
 
         self.number += 1;
 
-        Ok(Generation::new(self.number + 1, next_generation_pots,self.transitions.clone())?)
+        Ok(Generation::new(
+            self.number + 1,
+            next_generation_pots,
+            self.transitions.clone(),
+        )?)
     }
 
     fn pad_pots(&mut self) -> Result<(), Box<dyn Error>> {
@@ -203,6 +253,6 @@ mod day12_tests {
 
     #[test]
     fn part2_puzzle() {
-        assert!(Day12::new().part2().ends_with(""));
+        assert!(Day12::new().part2().ends_with("2650000000466"));
     }
 }
