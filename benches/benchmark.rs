@@ -1,6 +1,6 @@
 use aoc_2018::days::{
-    day1::Day1, day10::Day10, day11::Day11, day12::Day12, day13::Day13, day2::Day2, day3::Day3,
-    day4::Day4, day5::Day5, day6::Day6, day7::Day7, day8::Day8, day9::Day9, Day,
+    day1::Day1, day10::Day10, day11::Day11, day12::Day12, day13::Day13, day14::Day14, day2::Day2,
+    day3::Day3, day4::Day4, day5::Day5, day6::Day6, day7::Day7, day8::Day8, day9::Day9, Day,
 };
 use criterion::*;
 use std::time::Duration;
@@ -32,6 +32,8 @@ fn criterion_benchmark(c: &mut Criterion) {
     let day12_2 = Day12::new();
     let day13_1 = Day13::new();
     let day13_2 = Day13::new();
+    let day14_1 = Day14::new();
+    let day14_2 = Day14::new();
 
     c.bench_function("day1/part1", move |b| b.iter(|| day1_1.part1()));
     c.bench_function("day1/part2", move |b| b.iter(|| day1_2.part2()));
@@ -78,6 +80,18 @@ fn criterion_benchmark(c: &mut Criterion) {
         Benchmark::new("part2", move |b| b.iter(|| day13_2.part2()))
             .sample_size(10)
             .measurement_time(Duration::from_secs(60)),
+    );
+    c.bench(
+        "day14",
+        Benchmark::new("part1", move |b| b.iter(|| day14_1.part1()))
+            .sample_size(10)
+            .measurement_time(Duration::from_secs(60)),
+    );
+    c.bench(
+        "day14",
+        Benchmark::new("part2", move |b| b.iter(|| day14_2.part2()))
+            .sample_size(10)
+            .measurement_time(Duration::from_secs(300)), // this one is REALLY slow right now
     );
 }
 

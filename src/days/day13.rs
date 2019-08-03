@@ -169,29 +169,16 @@ impl Network {
             }
 
             let crashed_carts = self.crashed_carts.clone();
-            let working_carts = previous_carts
+
+            let carts_on_space = previous_carts
                 .iter()
-                .filter(|cart| !crashed_carts.contains(&cart.id));
+                .filter(|cart| !crashed_carts.contains(&cart.id))
+                .filter(|c| c.x == cart.x && c.y == cart.y);
 
-            let cart_positions = working_carts.clone().map(|cart| (cart.x, cart.y));
-
-            let crashed_ids = cart_positions
-                .map(|(x, y)| {
-                    let carts_on_space = working_carts
-                        .clone()
-                        .filter(|cart| cart.x == x && cart.y == y);
-
-                    if carts_on_space.clone().count() > 1 {
-                        carts_on_space.map(|cart| cart.id).collect::<Vec<_>>()
-                    } else {
-                        Vec::new()
-                    }
-                })
-                .flatten()
-                .collect::<Vec<_>>();
-
-            for id in crashed_ids {
-                self.crashed_carts.push(id);
+            if carts_on_space.clone().count() > 1 {
+                for c in carts_on_space {
+                    self.crashed_carts.push(c.id);
+                }
             }
 
             // skip if this cart has just been found to have crashed
