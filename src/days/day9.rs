@@ -169,7 +169,7 @@ impl Circle {
     }
 }
 
-fn parse_input(input: &str) -> Result<(usize, u32), Box<Error>> {
+fn parse_input(input: &str) -> Result<(usize, u32), Box<dyn Error>> {
     let matcher =
         Regex::new("(?P<players>\\d+) players; last marble is worth (?P<points>\\d+) points")
             .unwrap();
