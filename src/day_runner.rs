@@ -1,6 +1,7 @@
 use crate::days::{
-    day1::Day1, day10::Day10, day11::Day11, day12::Day12, day13::Day13, day14::Day14, day2::Day2,
-    day3::Day3, day4::Day4, day5::Day5, day6::Day6, day7::Day7, day8::Day8, day9::Day9, Day,
+    day1::Day1, day10::Day10, day11::Day11, day12::Day12, day13::Day13, day14::Day14, day15::Day15,
+    day2::Day2, day3::Day3, day4::Day4, day5::Day5, day6::Day6, day7::Day7, day8::Day8, day9::Day9,
+    Day,
 };
 use std::collections::HashMap;
 
@@ -25,6 +26,7 @@ impl DayRunner {
         days.insert(12, Box::new(Day12::new()));
         days.insert(13, Box::new(Day13::new()));
         days.insert(14, Box::new(Day14::new()));
+        days.insert(15, Box::new(Day15::new()));
 
         DayRunner { days }
     }
@@ -35,6 +37,13 @@ impl DayRunner {
             None => println!("I haven't got to that day yet!"),
         };
     }
+
+    pub fn run_day_part(&self, day: u32, part: u32) {
+        match self.days.get(&day) {
+            Some(day_instance) => run_day_part_internal(day, part, &day_instance),
+            None => println!("I haven't got to that day yet!"),
+        }
+    }
 }
 
 fn run_day_internal(day_number: u32, day: &Box<dyn Day>) {
@@ -44,4 +53,17 @@ fn run_day_internal(day_number: u32, day: &Box<dyn Day>) {
     println!("{}", day.part1());
     println!("===== Part 2 =====");
     println!("{}", day.part2());
+}
+
+fn run_day_part_internal(day_number: u32, day_part: u32, day: &Box<dyn Day>) {
+    let part: Box<Fn() -> String> = match day_part {
+        1 => Box::new(|| day.part1()),
+        2 => Box::new(|| day.part2()),
+        _ => Box::new(|| format!("There is no part {}!", day_part)),
+    };
+
+    println!();
+    println!("========== DAY {} ==========", day_number);
+    println!("===== Part {} =====", day_part);
+    println!("{}", part());
 }
